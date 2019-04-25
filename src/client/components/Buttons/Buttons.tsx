@@ -23,6 +23,7 @@ export interface ButtonProps {
 	marginRight?: string;
 	marginBottom?: string;
 	invalid?: boolean;
+	sidePadding?: string;
 }
 
 export const CenterButtonText = styled.div`
