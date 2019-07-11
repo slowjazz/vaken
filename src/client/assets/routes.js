@@ -41,7 +41,7 @@ const routes = [
 	},
 	{
 		authLevel: [UserType.Hacker, UserType.Organizer],
-		component: Team,
+		component: Travel,
 		displayText: 'Travel',
 		path: '/travel',
 	},
