@@ -17,12 +17,12 @@ export default gql`
 		}
 	}
 
-	mutation uploadFile($input: Upload!) {
+	mutation singleUpload($input: Upload!) {
 		singleUpload(input: $input) {
 			id
-			path
 			filename
 			mimetype
+			encoding
 		}
 	}
 `;

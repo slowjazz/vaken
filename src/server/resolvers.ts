@@ -1,5 +1,6 @@
 import { UserInputError, AuthenticationError, ApolloError } from 'apollo-server-express';
 import { ObjectID, Collection, ObjectId, FilterQuery } from 'mongodb';
+import { GraphQLUpload } from 'graphql-upload';
 import {
 	ApplicationFieldResolvers,
 	ApplicationQuestionResolvers,
@@ -26,6 +27,8 @@ import {
 } from './generated/graphql';
 import Context from './context';
 import { Models } from './models';
+
+const UPLOAD_DIR = './uploads'; // file uploads
 
 function toDietEnum(restriction: string): DietaryRestriction {
 	if (!Object.values(DietaryRestriction).includes(restriction))
@@ -193,9 +196,9 @@ export const resolvers: Resolvers = {
 			if (!team) return { _id: new ObjectID(), createdAt: new Date(0), memberIds: [], name: '' };
 			return query({ name: team.team }, models.Teams);
 		},
+		travel: async hacker => (await hacker).travel || null,
 		userType: () => UserType.Hacker,
 		volunteer: async hacker => (await hacker).volunteer || null,
-		travel: async hacker => (await hacker).travel || null,
 	},
 	Login: {
 		createdAt: async login => (await login).createdAt.getTime(),
@@ -293,6 +296,14 @@ export const resolvers: Resolvers = {
 			if (!ret) throw new AuthenticationError(`hacker not found: ${user.email}`);
 			return ret;
 		},
+		singleUpload: async (root, { file }) => {
+			const { stream, filename, mimetype, encoding } = await file;
+			// Save file to filesystem
+			// https://github.com/jaydenseric/apollo-upload-examples
+			// Return result
+			// File obj with id, path, filename,mimetype
+			return ;
+		},
 		updateMyProfile: async (root, args, ctx: Context) => {
 			// Enables a user to update their own profile
 			if (!ctx.user) throw new AuthenticationError(`cannot update profile: user not logged in`);
@@ -313,15 +324,6 @@ export const resolvers: Resolvers = {
 					`unable to update profile: "${JSON.stringify(ctx.user)}" not found `
 				);
 			return result;
-		},
-		uploadFile: async (root, args, ctx: Context) => {
-			// Save file to filesystem 
-			// https://github.com/jaydenseric/apollo-upload-examples
-
-			// Return result 
-			// File obj with id, path, filename,mimetype
-
-			
 		},
 	},
 	Organizer: {

@@ -65,6 +65,7 @@ export type File = {
 	path: Scalars['String'];
 	filename: Scalars['String'];
 	mimetype: Scalars['String'];
+	encoding: Scalars['String'];
 };
 
 export enum Gender {
@@ -460,12 +461,15 @@ export type TravelQuery = { __typename?: 'Query' } & {
 	>;
 };
 
-export type UploadFileMutationVariables = {
+export type SingleUploadMutationVariables = {
 	input: Scalars['Upload'];
 };
 
-export type UploadFileMutation = { __typename?: 'Mutation' } & {
-	singleUpload: { __typename?: 'File' } & Pick<File, 'id' | 'path' | 'filename' | 'mimetype'>;
+export type SingleUploadMutation = { __typename?: 'Mutation' } & {
+	singleUpload: { __typename?: 'File' } & Pick<
+		File,
+		'id' | 'path' | 'filename' | 'mimetype' | 'encoding'
+	>;
 };
 import { ObjectID } from 'mongodb';
 export type UserDbInterface = {
@@ -530,6 +534,7 @@ export type FileDbObject = {
 	path: string;
 	filename: string;
 	mimetype: string;
+	encoding: string;
 };
 
 export type OrganizerDbObject = UserDbInterface & {
@@ -797,29 +802,30 @@ export function useTravelQuery(
 ) {
 	return ReactApolloHooks.useQuery<TravelQuery, TravelQueryVariables>(TravelDocument, baseOptions);
 }
-export const UploadFileDocument = gql`
-	mutation uploadFile($input: Upload!) {
+export const SingleUploadDocument = gql`
+	mutation singleUpload($input: Upload!) {
 		singleUpload(input: $input) {
 			id
 			path
 			filename
 			mimetype
+			encoding
 		}
 	}
 `;
-export type UploadFileMutationFn = ReactApollo.MutationFn<
-	UploadFileMutation,
-	UploadFileMutationVariables
+export type SingleUploadMutationFn = ReactApollo.MutationFn<
+	SingleUploadMutation,
+	SingleUploadMutationVariables
 >;
 
-export function useUploadFileMutation(
+export function useSingleUploadMutation(
 	baseOptions?: ReactApolloHooks.MutationHookOptions<
-		UploadFileMutation,
-		UploadFileMutationVariables
+		SingleUploadMutation,
+		SingleUploadMutationVariables
 	>
 ) {
-	return ReactApolloHooks.useMutation<UploadFileMutation, UploadFileMutationVariables>(
-		UploadFileDocument,
+	return ReactApolloHooks.useMutation<SingleUploadMutation, SingleUploadMutationVariables>(
+		SingleUploadDocument,
 		baseOptions
 	);
 }

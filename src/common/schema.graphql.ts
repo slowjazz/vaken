@@ -174,9 +174,9 @@ export default gql`
 
 	type File @entity {
 		id: ID! @id @column
-		path: String! @column
 		filename: String! @column
 		mimetype: String! @column
+		encoding: String! @column
 	}
 
 	type TravelReceipt @entity(embedded: true) {

@@ -64,6 +64,7 @@ export type File = {
 	path: Scalars['String'];
 	filename: Scalars['String'];
 	mimetype: Scalars['String'];
+	encoding: Scalars['String'];
 };
 
 export enum Gender {
@@ -517,6 +518,7 @@ export type FileResolvers<ContextType = any, ParentType = ResolversTypes['File']
 	path?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 	filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 	mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+	encoding?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
 export type HackerResolvers<ContextType = any, ParentType = ResolversTypes['Hacker']> = {
@@ -813,6 +815,7 @@ export type FileDbObject = {
 	path: string;
 	filename: string;
 	mimetype: string;
+	encoding: string;
 };
 
 export type OrganizerDbObject = UserDbInterface & {

@@ -6,6 +6,7 @@ import { ManageHackers } from '../routes/manage/ManageHackers';
 import { Team } from '../routes/team/Team';
 import { Profile } from '../routes/profile/Profile';
 import { Help } from '../routes/help/Help';
+import { Travel } from '../routes/travel/Travel';
 import { UserType } from '../generated/graphql';
 
 const routes = [
